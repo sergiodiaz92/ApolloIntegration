@@ -57,7 +57,7 @@ namespace ApolloIntegration.Application.Services.ConnectAPIApolloService
                         }
                         rate++;
                         page++;
-                        flag = (SearchContacts.Pagination.Page != SearchContacts.Pagination.TotalPages);
+                        flag = (SearchContacts.Pagination.Page != SearchContacts.Pagination.TotalPages) && SearchContacts.Pagination.TotalPages != 0;
                     } while (flag);
                 }
 

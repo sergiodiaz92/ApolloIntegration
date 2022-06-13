@@ -21,7 +21,6 @@ namespace ApolloIntegration.ConsoleApp
             var _apolloService = host.Services.GetRequiredService<IConnectAPIApolloService>();
             var response = await _apolloService.CreateContacts();
             Console.WriteLine($"{response.Message}");
-            Console.WriteLine("Press any key to continue...");
         }
         public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)

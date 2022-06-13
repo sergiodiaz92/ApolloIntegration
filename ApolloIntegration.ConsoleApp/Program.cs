@@ -28,7 +28,6 @@ namespace ApolloIntegration.ConsoleApp
             .UseContentRoot(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
             .ConfigureServices((hostContext, services) =>
             {
-                //services.AddOptions<ApolloAPISettings>().Bind(hostContext.Configuration.GetSection("ApolloAPI"));
                 services.AddApplication();
                 services.AddInfrastructure(hostContext.Configuration);
             });

@@ -5,14 +5,17 @@ Basic Integration of the Apollo API to get the contacts and upload them to a Pos
   ##  Architecture and Design Implemented
   - Clean Architecture
   - Dependency Injection
-  - Mediator
+  - Mediator Pattern
+  - Option Pattern
 
   ## Frameworks, Package and Tools
     - .Net Core 5
     - EF Core
     - Fluent API
+    - EF Migrations
     - Automapper
     - Npgsql
     - MediatR
     - HttpClient
     - Newtonsoft.Json
+    - Generic Host

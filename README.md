@@ -16,6 +16,7 @@ Basic Integration of the Apollo API to get the contacts and upload them to a Pos
     - Automapper
     - Npgsql
     - MediatR
+    - FluentValidation
     - HttpClient
     - Newtonsoft.Json
     - Generic Host

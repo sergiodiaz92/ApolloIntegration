@@ -1,10 +1,13 @@
 ﻿using ApolloIntegration.Application;
 using ApolloIntegration.Application.Common.Interfaces;
 using ApolloIntegration.Infrastructure;
+using ApolloIntegration.Infrastructure.ApolloAPI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ApolloIntegration.ConsoleApp
@@ -13,22 +16,21 @@ namespace ApolloIntegration.ConsoleApp
     {
         public static async Task Main(string[] args)
         {
-            var builder = new ConfigurationBuilder()
-                   .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile("appsettings.json", optional: false);
-            IConfiguration config = builder.Build();
-            var services = new ServiceCollection();
-            services.AddApplication();
-            services.AddInfrastructure(config);
+            var host = CreateHostBuilder(args).Build();
 
-            var serviceProvider = services.BuildServiceProvider();
-
-            var _apolloService = serviceProvider.GetService<IConnectAPIApolloService>();
-            Console.WriteLine("Getting list of contacts... ");
-            var apiKey = config.GetValue<string>("api_key");
-            var response = await _apolloService.CreateContacts(apiKey);
+            var _apolloService = host.Services.GetRequiredService<IConnectAPIApolloService>();
+            var response = await _apolloService.CreateContacts();
             Console.WriteLine($"{response.Message}");
             Console.WriteLine("Press any key to continue...");
         }
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .UseContentRoot(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
+            .ConfigureServices((hostContext, services) =>
+            {
+                //services.AddOptions<ApolloAPISettings>().Bind(hostContext.Configuration.GetSection("ApolloAPI"));
+                services.AddApplication();
+                services.AddInfrastructure(hostContext.Configuration);
+            });
     }
 }

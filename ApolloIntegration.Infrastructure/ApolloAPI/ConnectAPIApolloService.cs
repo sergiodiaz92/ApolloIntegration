@@ -4,6 +4,7 @@ using ApolloIntegration.Application.Common.Interfaces;
 using ApolloIntegration.Application.Common.Responses;
 using ApolloIntegration.Infrastructure.ApolloAPI;
 using MediatR;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +19,16 @@ namespace ApolloIntegration.Application.Services.ConnectAPIApolloService
     {
         private readonly ApolloClient _apolloClient;
         private readonly IMediator _mediator;
+        private readonly ApolloAPISettings _settings;
         private const int RATE_LIMIT = 5;
 
-        public ConnectAPIApolloService(ApolloClient apolloClient, IMediator mediator)
+        public ConnectAPIApolloService(ApolloClient apolloClient, IMediator mediator, IOptions<ApolloAPISettings> settings)
         {
             _apolloClient = apolloClient;
             _mediator = mediator;
+            _settings = settings.Value;
         }
-        public async Task<ServiceResponse<bool>> CreateContacts(string apiKey)
+        public async Task<ServiceResponse<bool>> CreateContacts()
         {
             try
             {
@@ -38,7 +41,7 @@ namespace ApolloIntegration.Application.Services.ConnectAPIApolloService
                     do
                     {
                         if (rate == RATE_LIMIT) Thread.Sleep(60000);
-                        var SearchContacts = await _apolloClient.GetAllContacts(apiKey,keyword.Keyword, page);
+                        var SearchContacts = await _apolloClient.GetAllContacts(_settings.apiKey,keyword.Keyword, page);
                         if (SearchContacts.Contacts == null && SearchContacts.Pagination.Page == 1)
                         {
                             break;

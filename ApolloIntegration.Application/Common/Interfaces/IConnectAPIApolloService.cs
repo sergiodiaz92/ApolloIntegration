@@ -11,6 +11,6 @@ namespace ApolloIntegration.Application.Common.Interfaces
 {
     public interface IConnectAPIApolloService
     {
-        Task<ServiceResponse<bool>> CreateContacts(string apiKey);
+        Task<ServiceResponse<bool>> CreateContacts();
     }
 }

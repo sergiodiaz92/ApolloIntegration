@@ -30,6 +30,7 @@ namespace ApolloIntegration.Application.ApolloContacts.Commands.CreateApolloCont
             if (dbEntity != null)
             {
                 dbEntity.JsonData = entity.JsonData;
+                dbEntity.LastUpdatedDate = entity.LastUpdatedDate;
             }
             else
             {

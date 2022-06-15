@@ -51,7 +51,8 @@ namespace ApolloIntegration.Application.Services.ConnectAPIApolloService
                             CreateApolloContactCommand command = new CreateApolloContactCommand
                             {
                                 ApolloId = contact.Id,
-                                JsonData = JsonSerializer.Serialize(contact)
+                                JsonData = JsonSerializer.Serialize(contact),
+                                LastUpdatedDate = DateTime.Now
                             };
                             await _mediator.Send(command);
                         }

@@ -11,5 +11,6 @@ namespace ApolloIntegration.Application.ApolloContacts.Commands.CreateApolloCont
     {
         public string ApolloId { get; set; }
         public string JsonData { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
     }
 }

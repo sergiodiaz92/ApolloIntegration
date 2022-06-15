@@ -12,5 +12,6 @@ namespace ApolloIntegration.Domain.Entities
         public int id { get; set; }
         public string ApolloId { get; set; }
         public string JsonData { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
     }
 }

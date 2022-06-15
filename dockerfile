@@ -2,13 +2,15 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
-WORKDIR /src
-COPY ["*.csproj", "/ApolloIntegration.ConsoleApp/"]
-COPY ["../ApolloIntegration.Application/*.csproj", "/ApolloIntegration.Application/"]
-COPY ["../ApolloIntegration.Domain/*.csproj", "/ApolloIntegration.Domain/"]
-COPY ["../ApolloIntegration.Infrastructure/*.csproj", "/ApolloIntegration.Infrastructure/"]
+WORKDIR "/src"
+COPY ["./ApolloIntegration.ConsoleApp/*.csproj", "./ApolloIntegration.ConsoleApp/"]
+COPY ["./ApolloIntegration.Application/*.csproj", "./ApolloIntegration.Application/"]
+COPY ["./ApolloIntegration.Domain/*.csproj", "./ApolloIntegration.Domain/"]
+COPY ["./ApolloIntegration.Infrastructure/*.csproj", "./ApolloIntegration.Infrastructure/"]
+WORKDIR "/src/ApolloIntegration.ConsoleApp"
 RUN dotnet restore "ApolloIntegration.ConsoleApp.csproj"
-COPY . .
+WORKDIR "/src"
+COPY ./ .
 WORKDIR "/src/ApolloIntegration.ConsoleApp"
 RUN dotnet build "ApolloIntegration.ConsoleApp.csproj" -c Release -o /app/build
 

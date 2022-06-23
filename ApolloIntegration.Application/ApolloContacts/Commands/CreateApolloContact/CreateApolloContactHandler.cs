@@ -1,4 +1,5 @@
 ﻿using ApolloIntegration.Application.Common.Interfaces;
+using ApolloIntegration.Application.Utils;
 using ApolloIntegration.Domain.Entities;
 using AutoMapper;
 using MediatR;
@@ -30,7 +31,7 @@ namespace ApolloIntegration.Application.ApolloContacts.Commands.CreateApolloCont
             if (dbEntity != null)
             {
                 dbEntity.JsonData = entity.JsonData;
-                dbEntity.LastUpdatedDate = entity.LastUpdatedDate;
+                dbEntity.LastUpdatedDate = entity.LastUpdatedDate.SetKindUtc();
             }
             else
             {

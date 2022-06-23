@@ -2,6 +2,7 @@
 using ApolloIntegration.Application.ApolloKeywords.Queries.ApolloKeywordsList;
 using ApolloIntegration.Application.Common.Interfaces;
 using ApolloIntegration.Application.Common.Responses;
+using ApolloIntegration.Application.Utils;
 using ApolloIntegration.Infrastructure.ApolloAPI;
 using MediatR;
 using Microsoft.Extensions.Options;
@@ -52,7 +53,7 @@ namespace ApolloIntegration.Application.Services.ConnectAPIApolloService
                             {
                                 ApolloId = contact.Id,
                                 JsonData = JsonSerializer.Serialize(contact),
-                                LastUpdatedDate = DateTime.Now
+                                LastUpdatedDate = DateTime.Now.SetKindUtc()
                             };
                             await _mediator.Send(command);
                         }

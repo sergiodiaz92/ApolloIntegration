@@ -28,6 +28,7 @@ namespace ApolloIntegration.ConsoleApp
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddApplication();
+                services.AddHealthChecks();
                 services.AddInfrastructure(hostContext.Configuration);
             });
     }

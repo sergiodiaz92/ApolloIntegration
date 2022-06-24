@@ -16,7 +16,7 @@ Basic Integration of the Apollo API to get the contacts and upload them to a Pos
 
 ### Frameworks, Package and Tools
   
-    - .Net Core 6
+    - .Net 6
     - EF Core
     - Fluent API
     - EF Migrations

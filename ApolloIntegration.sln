@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApolloIntegration.ConsoleApp", "ApolloIntegration.ConsoleApp\ApolloIntegration.ConsoleApp.csproj", "{6973CC4B-F077-4FF5-A736-6C1B5D96D756}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApolloIntegration.WorkerApp", "WorkerApp\ApolloIntegration.WorkerApp.csproj", "{6CEBFD81-71B4-43F5-A152-A890D750F223}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApolloIntegration.WorkerApp", "ApolloIntegration.WorkerApp\ApolloIntegration.WorkerApp.csproj", "{6CEBFD81-71B4-43F5-A152-A890D750F223}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

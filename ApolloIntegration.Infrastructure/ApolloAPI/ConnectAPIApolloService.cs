@@ -21,7 +21,6 @@ namespace ApolloIntegration.Application.Services.ConnectAPIApolloService
         private readonly ApolloClient _apolloClient;
         private readonly IMediator _mediator;
         private readonly ApolloAPISettings _settings;
-        private const int RATE_LIMIT = 5;
 
         public ConnectAPIApolloService(ApolloClient apolloClient, IMediator mediator, IOptions<ApolloAPISettings> settings)
         {
@@ -41,7 +40,7 @@ namespace ApolloIntegration.Application.Services.ConnectAPIApolloService
                     int page = 1;
                     do
                     {
-                        if (rate == RATE_LIMIT) Thread.Sleep(60000);
+                        if (rate == _settings.requestRateLimitPerMinute) Thread.Sleep(TimeSpan.FromSeconds(_settings.sleepTimeSeconds));
                         var SearchContacts = await _apolloClient.GetAllContacts(_settings.apiKey,keyword.Keyword, page);
                         if (SearchContacts.Contacts == null && SearchContacts.Pagination.Page == 1)
                         {

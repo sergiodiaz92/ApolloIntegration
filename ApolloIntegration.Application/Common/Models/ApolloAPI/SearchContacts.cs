@@ -62,7 +62,7 @@ namespace ApolloIntegration.Application.Common.Models.ApolloAPI
         public string Name { get; set; }
 
         [JsonProperty("linkedin_url")]
-        public Uri LinkedinUrl { get; set; }
+        public string LinkedinUrl { get; set; }
 
         [JsonProperty("title")]
         public string Title { get; set; }
@@ -95,7 +95,7 @@ namespace ApolloIntegration.Application.Common.Models.ApolloAPI
         public string Headline { get; set; }
 
         [JsonProperty("photo_url")]
-        public Uri PhotoUrl { get; set; }
+        public string PhotoUrl { get; set; }
 
         [JsonProperty("present_raw_address")]
         public string PresentRawAddress { get; set; }
@@ -233,7 +233,7 @@ namespace ApolloIntegration.Application.Common.Models.ApolloAPI
         public string Name { get; set; }
 
         [JsonProperty("website_url")]
-        public Uri WebsiteUrl { get; set; }
+        public string WebsiteUrl { get; set; }
 
         [JsonProperty("blog_url")]
         public object BlogUrl { get; set; }
@@ -242,10 +242,10 @@ namespace ApolloIntegration.Application.Common.Models.ApolloAPI
         public object AngellistUrl { get; set; }
 
         [JsonProperty("linkedin_url")]
-        public Uri LinkedinUrl { get; set; }
+        public string LinkedinUrl { get; set; }
 
         [JsonProperty("twitter_url")]
-        public Uri TwitterUrl { get; set; }
+        public string TwitterUrl { get; set; }
 
         [JsonProperty("facebook_url")]
         public object FacebookUrl { get; set; }
@@ -276,7 +276,7 @@ namespace ApolloIntegration.Application.Common.Models.ApolloAPI
         public object PubliclyTradedExchange { get; set; }
 
         [JsonProperty("logo_url")]
-        public Uri LogoUrl { get; set; }
+        public string LogoUrl { get; set; }
 
         [JsonProperty("crunchbase_url")]
         public object CrunchbaseUrl { get; set; }
@@ -355,7 +355,7 @@ namespace ApolloIntegration.Application.Common.Models.ApolloAPI
         public string Name { get; set; }
 
         [JsonProperty("website_url")]
-        public Uri WebsiteUrl { get; set; }
+        public string WebsiteUrl { get; set; }
 
         [JsonProperty("blog_url")]
         public object BlogUrl { get; set; }
@@ -364,10 +364,10 @@ namespace ApolloIntegration.Application.Common.Models.ApolloAPI
         public object AngellistUrl { get; set; }
 
         [JsonProperty("linkedin_url")]
-        public Uri LinkedinUrl { get; set; }
+        public string LinkedinUrl { get; set; }
 
         [JsonProperty("twitter_url")]
-        public Uri TwitterUrl { get; set; }
+        public string TwitterUrl { get; set; }
 
         [JsonProperty("facebook_url")]
         public object FacebookUrl { get; set; }
@@ -398,7 +398,7 @@ namespace ApolloIntegration.Application.Common.Models.ApolloAPI
         public object PubliclyTradedExchange { get; set; }
 
         [JsonProperty("logo_url")]
-        public Uri LogoUrl { get; set; }
+        public string LogoUrl { get; set; }
 
         [JsonProperty("crunchbase_url")]
         public object CrunchbaseUrl { get; set; }

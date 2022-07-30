@@ -1,10 +1,12 @@
 ﻿using ApolloIntegration.Application.ApolloContacts.Commands.CreateApolloContact;
 using ApolloIntegration.Application.ApolloKeywords.Queries.ApolloKeywordsList;
 using ApolloIntegration.Application.Common.Interfaces;
+using ApolloIntegration.Application.Common.Models.ApolloAPI;
 using ApolloIntegration.Application.Common.Responses;
 using ApolloIntegration.Application.Utils;
 using ApolloIntegration.Infrastructure.ApolloAPI;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -28,8 +30,9 @@ namespace ApolloIntegration.Application.Services.ConnectAPIApolloService
             _mediator = mediator;
             _settings = settings.Value;
         }
-        public async Task<ServiceResponse<bool>> CreateContacts()
+        public async Task<ServiceResponse<bool>> CreateContacts(ILogger logger)
         {
+            List<Contact> AllContacts = new List<Contact>();
             try
             {
                 int rate = 1;
@@ -40,26 +43,38 @@ namespace ApolloIntegration.Application.Services.ConnectAPIApolloService
                     int page = 1;
                     do
                     {
-                        if (rate == _settings.requestRateLimitPerMinute) Thread.Sleep(TimeSpan.FromSeconds(_settings.sleepTimeSeconds));
-                        var SearchContacts = await _apolloClient.GetAllContacts(_settings.apiKey,keyword.Keyword, page);
+                        if (rate == _settings.requestRateLimitPerMinute)
+                        {
+                            rate = 1;
+                            Thread.Sleep(TimeSpan.FromSeconds(_settings.sleepTimeSeconds));
+                        }
+                        var SearchContacts = await _apolloClient.GetAllContacts(_settings.apiKey, keyword.Keyword, page);
+                        AllContacts.AddRange(SearchContacts.Contacts);
                         if (SearchContacts.Contacts == null && SearchContacts.Pagination.Page == 1)
                         {
                             break;
-                        }
-                        foreach (var contact in SearchContacts.Contacts)
-                        {
-                            CreateApolloContactCommand command = new CreateApolloContactCommand
-                            {
-                                ApolloId = contact.Id,
-                                JsonData = JsonSerializer.Serialize(contact),
-                                LastUpdatedDate = DateTime.Now.SetKindUtc()
-                            };
-                            await _mediator.Send(command);
                         }
                         rate++;
                         page++;
                         flag = (SearchContacts.Pagination.Page != SearchContacts.Pagination.TotalPages) && SearchContacts.Pagination.TotalPages != 0;
                     } while (flag);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogInformation($"Exception Error: {e.Message}");
+            }
+            try
+            {
+                foreach (var contact in AllContacts)
+                {
+                    CreateApolloContactCommand command = new CreateApolloContactCommand
+                    {
+                        ApolloId = contact.Id,
+                        JsonData = JsonSerializer.Serialize(contact),
+                        LastUpdatedDate = DateTime.Now.SetKindUtc()
+                    };
+                    await _mediator.Send(command);
                 }
 
 

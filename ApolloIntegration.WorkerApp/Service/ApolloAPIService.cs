@@ -21,7 +21,7 @@ namespace ApolloIntegration.WorkerApp.Service
         }
         protected override async Task ExecuteBackgroundService()
         {
-            var response = await _apolloApi.CreateContacts();
+            var response = await _apolloApi.CreateContacts(_logger);
             if (!response.Success)
             {
                 _logger.LogError("Error in {0}. StackTrace: {1}", this.config.ServiceName, response.Message);

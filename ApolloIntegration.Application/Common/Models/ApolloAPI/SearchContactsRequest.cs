@@ -13,6 +13,6 @@ namespace ApolloIntegration.Application.Common.Models.ApolloAPI
         public string sort_by_field { get; set; } = "contact_last_activity_date";
         public string sort_ascending { get; set; } = "false";
         public int page { get; set; } = 1;
-        public int per_page { get; set; } = 25;
+        public int per_page { get; set; } = 200;
     }
 }

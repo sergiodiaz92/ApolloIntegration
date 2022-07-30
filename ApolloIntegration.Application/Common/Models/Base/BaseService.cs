@@ -13,9 +13,6 @@ namespace ApolloIntegration.Application.Common.Models.Base
 {
     public abstract class BaseService<T> : BackgroundService, IHostedService, IDisposable where T : IServiceConfiguration
     {
-        private int executionCount = 0;
-        private DateTime lastRunDate = DateTime.Now;
-
         private Timer _timer;
 
         private bool isProcessing = false;
@@ -40,34 +37,33 @@ namespace ApolloIntegration.Application.Common.Models.Base
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _timer = new Timer(RunService, null, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(config.PeriodTimerSeconds));
+            _timer = StartTimer(new TimeSpan(config.ExecutionTimeHour, config.ExecutionTimeMinutes, config.ExecutionTimeSeconds), new TimeSpan(config.IntervalExecutionTimeHour, config.IntervalExecutionTimeMinutes, config.IntervalExecutionTimeSeconds));
             return Task.CompletedTask;
         }
         protected abstract Task ExecuteBackgroundService();
 
         private void RunService(object state)
         {
-            if (executionCount < config.RunsPerDay && lastRunDate.Date == DateTime.Now.Date)
-            {
-                ExecutingService();
-            }
-            else if(executionCount >= config.RunsPerDay && lastRunDate.Date != DateTime.Now.Date)
-            {
-                executionCount = 0;
-                ExecutingService();
-            }
-        }
-        private void ExecutingService()
-        {
-            var count = Interlocked.Increment(ref executionCount);
-            lastRunDate = DateTime.Now;
-
-            _logger.LogInformation("Service for {0} is Running. Count: {1}", this.config.ServiceName, count);
+            _logger.LogInformation("Service for {0} is Running.", this.config.ServiceName);
 
             if (!this.isProcessing)
             {
                 _ = this.ExecuteBackgroundService();
             }
+        }
+        protected Timer StartTimer(TimeSpan scheduledRunTime, TimeSpan timeBetweenEachRun)
+        {
+            // Initialize timer
+            double current = DateTime.Now.TimeOfDay.TotalMilliseconds;
+            double scheduledTime = scheduledRunTime.TotalMilliseconds;
+            double intervalPeriod = timeBetweenEachRun.TotalMilliseconds;
+
+            double firstExecution = current > scheduledTime ? intervalPeriod - (current - scheduledTime) : scheduledTime - current;
+
+            TimerCallback callback = new TimerCallback(RunService);
+
+            return new Timer(callback, null, Convert.ToInt32(firstExecution), Convert.ToInt32(intervalPeriod));
+
         }
     }
 }
